@@ -12,6 +12,14 @@ router.post("/", async(req,res,next) => {
         .catch(next)
 })
 
+router.get("/", async(req,res,next) => {
+    await projectModel.findAllProjects()
+        .then(project => {
+            res.json(project)
+        })
+        .catch(next)
+})
+
 router.use((err,req,res,next) => { // eslint-disable-line
     res.status(err.status || 500)
         .json({

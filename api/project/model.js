@@ -14,6 +14,15 @@ async function createProject(payload) {
     return newProject
 }
 
+async function findAllProjects() {
+    const result = await db("projects")
+    result.forEach(project => project.project_completed 
+        ? project.project_completed = true 
+        : project.project_completed = false)
+    return result 
+}
+
 module.exports = {
     createProject,
+    findAllProjects
 }
