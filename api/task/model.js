@@ -15,11 +15,21 @@ async function createTask(payload) {
 }
 
 async function findAllTasks() {
-    const result = await db("tasks")
-    result.forEach(project => project.task_completed 
-        ? project.task_completed = true 
-        : project.task_completed = false)
-    return result 
+    const tasks = await db("tasks as t")
+    .join("projects as p", "t.project_id", "p.project_id")
+    .select(
+        "t.task_id",
+        "t.task_description",
+        "t.task_notes",
+        "t.task_completed",
+        "p.project_name",
+        "p.project_description"
+    )
+    tasks.forEach(task => task.task_completed 
+        ? task.task_completed = true 
+        : task.task_completed = false)
+
+    return tasks 
 }
 
 module.exports = {
