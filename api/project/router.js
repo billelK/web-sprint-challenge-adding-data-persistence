@@ -4,12 +4,11 @@ const router = express.Router()
 
 
 router.get("/", (req,res,next) => {
-    res.json("Hello from project router")
-//     try {
-//         res.json("Hello from project router")
-//     } catch(error) {
-//         next(error)
-//     }
+    try {
+        res.json("Hello from project router")
+    } catch(error) {
+        next(error)
+    }
 })
 
 router.use((err,req,res,next) => {
