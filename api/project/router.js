@@ -1,20 +1,21 @@
 // build your `/api/projects` router here
 const express = require("express")
+const projectModel = require("./model")
 const router = express.Router()
 
 
-router.get("/", (req,res,next) => {
-    try {
-        res.json("Hello from project router")
-    } catch(error) {
-        next(error)
-    }
+router.post("/", async(req,res,next) => {
+    await projectModel.createProject(req.body)
+        .then(project => {
+            res.json(project)
+        })
+        .catch(next)
 })
 
 router.use((err,req,res,next) => { // eslint-disable-line
     res.status(err.status || 500)
         .json({
-            message: "err.message"
+            message: err.message
         })
 })
 
